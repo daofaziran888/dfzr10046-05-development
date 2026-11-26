@@ -6,6 +6,7 @@ from app.services.dim_entry import DimEntryService
 from app.services.scd_chain import ScdChainService
 from app.services.surrogate_key import SurrogateKeyService
 from app.services.conform_check import ConformCheckService
+from app.services.field_ruling import FieldRulingService
 from app.services.fact_assemble import FactAssembleService
 from app.services.degenerate_dim import DegenerateDimService
 from app.services.late_fact import LateFactService
@@ -30,6 +31,7 @@ SERVICES: dict[str, BaseModuleService] = {
     "scd_chain": ScdChainService(),
     "surrogate_key": SurrogateKeyService(),
     "conform_check": ConformCheckService(),
+    "field_ruling": FieldRulingService(),
     "fact_assemble": FactAssembleService(),
     "degenerate_dim": DegenerateDimService(),
     "late_fact": LateFactService(),

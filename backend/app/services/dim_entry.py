@@ -36,6 +36,18 @@ class DimEntryService(BaseModuleService):
                 result.append(dict(r))
         return result
 
+    def pending_rulings(
+        self, dim_code: str, round_no: str | int | None = None,
+    ) -> dict[str, Any]:
+        """维度建档待办：按原登记（维度编号）和核对轮次接收字段裁决结论。
+
+        允许改正的字段范围由已签收结论判定；已失效裁决不出现在待办中，
+        下一轮编辑不能沿用。
+        """
+        from app.services.field_ruling import FieldRulingService
+
+        return FieldRulingService().todos(dim_code, round_no)
+
     def register_dimension(
         self, dim_code: str, dim_name: str, business_key: str,
         natural_source: str, dim_type: str, domain: str,

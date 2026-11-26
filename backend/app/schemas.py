@@ -29,3 +29,20 @@ class EntryPayload(BaseModel):
 class ActionPayload(BaseModel):
     action: str
     remark: str | None = None
+
+
+class RulingItemPayload(BaseModel):
+    """单条字段裁决：核对员对某字段采用某边的值、退回或暂缓。"""
+    裁决字段: str
+    基准值: str = ""
+    对照值: str = ""
+    裁决结论: str
+
+
+class AdjudicatePayload(BaseModel):
+    """核对员按原登记和核对轮次批量下达字段裁决。"""
+    核对编号: str
+    原登记: str
+    核对轮次: int
+    操作者: str = "核对员"
+    rulings: list[RulingItemPayload] = Field(default_factory=list)

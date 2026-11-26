@@ -1,6 +1,13 @@
 import { request } from './client'
 import { moduleMeta } from '@/data/modules'
-import type { ActionResult, EntryRow, OverviewResult, PageResult } from '@/data/types'
+import type {
+  ActionResult,
+  EntryRow,
+  OverviewResult,
+  PageResult,
+  RulingHistory,
+  RulingTodos,
+} from '@/data/types'
 
 export { moduleMeta }
 
@@ -29,11 +36,32 @@ export async function runAction(
   key: string,
   id: number,
   action: string,
+  remark?: string,
 ): Promise<ActionResult> {
   const response = await request(`/api/${key}/${id}/actions`, {
     method: 'POST',
-    body: JSON.stringify({ action }),
+    body: JSON.stringify({ action, remark: remark ?? null }),
   })
+  return await response.json()
+}
+
+/** 维度建档待办：按原登记和核对轮次接收字段裁决结论。 */
+export async function listRulingTodos(
+  registration: string,
+  roundNo?: string,
+): Promise<RulingTodos> {
+  const query = new URLSearchParams({ 原登记: registration })
+  if (roundNo) query.set('核对轮次', roundNo)
+  const response = await request(`/api/field_ruling/todos?${query.toString()}`)
+  if (!response.ok) throw new Error('建档待办读取失败')
+  return await response.json()
+}
+
+/** 按原登记查询已写入的名字和历轮意见。 */
+export async function loadRulingHistory(registration: string): Promise<RulingHistory> {
+  const query = new URLSearchParams({ 原登记: registration }).toString()
+  const response = await request(`/api/field_ruling/history?${query}`)
+  if (!response.ok) throw new Error('裁决历程读取失败')
   return await response.json()
 }
 

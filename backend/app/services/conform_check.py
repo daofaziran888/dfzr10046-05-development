@@ -49,3 +49,18 @@ class ConformCheckService(BaseModuleService):
                     and r.get("status") == "存在偏差":
                 return True, f"维度 {dimension} 存在一致性偏差，阻断事实装配"
         return False, f"维度 {dimension} 核对一致，允许装配"
+
+    def submit_field_rulings(
+        self, check_code: str, registration: str, round_no: int,
+        rulings: list[dict[str, Any]], operator: str = "核对员",
+    ) -> tuple[bool, str, list[dict[str, Any]]]:
+        """核对员入口：把核对结论按字段独立裁决（采用某边的值/退回/暂缓）。
+
+        两份客户维度登记不再只能一起通过或退回；裁决按登记轮次生效，
+        结论同步到维度建档待办，由建档员按原登记和核对轮次改正。
+        """
+        from app.services.field_ruling import FieldRulingService
+
+        return FieldRulingService().adjudicate(
+            check_code, registration, round_no, rulings, operator,
+        )

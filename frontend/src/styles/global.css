@@ -70,3 +70,11 @@ body { margin: 0; background: #f6f8fb; color: #1f2937; }
 .analysis-chart { display: flex; align-items: flex-end; gap: 8px; height: 160px; padding: 12px 0; }
 .analysis-bar { flex: 1; border-radius: 4px 4px 0 0; background: var(--brand); min-width: 24px; position: relative; transition: height 0.4s; }
 .analysis-bar span { position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); font-size: 10px; color: var(--muted); white-space: nowrap; }
+/* 字段裁决：建档待办与历程查询 */
+.ruling-panel { margin-top: 16px; background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 12px; }
+.ruling-panel h3 { margin: 0 0 10px; font-size: 14px; }
+.ruling-panel h4 { margin: 12px 0 8px; font-size: 13px; }
+.ruling-hint { color: var(--muted); font-size: 12px; }
+.ruling-round { border-top: 1px solid #f0f2f5; padding: 8px 0; }
+.ruling-round-head { font-size: 13px; font-weight: 600; margin: 0 0 6px; }
+.ruling-round ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: 12px; }
